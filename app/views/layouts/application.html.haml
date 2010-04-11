@@ -1,0 +1,16 @@
+!!!
+%html
+  = render :partial => 'layouts/chunks/template_header'
+
+  %body
+    #container
+      #header
+
+      #content.c
+        #content_area.left
+          = yield
+        #content_sidebar.right
+          = yield :sidebar
+
+      #footer
+      

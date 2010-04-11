@@ -1,0 +1,6 @@
+body {}
+
+
+.c:after {content: "."; clear: both; display: block; height: 0; visibility: hidden;}
+.left {clear: none; float: left;}
+.right {clear: none; float: right;}

@@ -1,0 +1,11 @@
+- form_for @account, :url => account_path do |f|
+  %fieldset
+    %fieldset
+      %label{:for => "company"} Company
+      = f.text_field :company
+    %fieldset
+      %label{:for => "email"} Email Address
+      = f.text_field :email
+
+  %fieldset.buttons
+    = submit_tag 'Create Account'

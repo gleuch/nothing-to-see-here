@@ -1,0 +1,20 @@
+= error_messages_for :timesheet
+
+- form_for @timesheet, :url => get_timesheet_path do |f|
+  %fieldset
+    - if @project.blank?
+      %fieldset.project
+        %label{:for => "project"} Project
+        = f.select :project, @client.projects.all(:order => 'name ASC').collect {|p| [ p.name, p.id ] }, {:include_blank => 'Choose...'}
+    %fieldset
+      %label{:for => "message"} Message
+      = f.text_field :message
+    %fieldset
+      %label{:for => "time_spent"} Time Spent
+      = f.text_field :time_spent
+    %fieldset
+      %label{:for => "worked_at"} Date Worked
+      = f.text_field :worked_at
+
+  %fieldset.buttons
+    = submit_tag 'Add Timesheet'

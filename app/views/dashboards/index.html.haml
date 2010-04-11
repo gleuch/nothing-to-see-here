@@ -1,0 +1,14 @@
+[dashboard]
+
+- if !current_user.portfolios.blank?
+  - current_user.portfolios.each do |portfolio|
+    %h2
+      %a{:href => portfolio_path(portfolio.slug)}= portfolio.title
+    - unless portfolio.clients.blank?
+      %ul
+        - portfolio.clients.each do |client|
+          %li
+            %a{:href => portfolio_client_path(portfolio.slug, client.slug)}= client.name
+
+- elsif !current_user.clients.blank?
+  [ show clients ]

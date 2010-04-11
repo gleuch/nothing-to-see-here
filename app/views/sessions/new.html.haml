@@ -1,0 +1,18 @@
+- form_tag session_path do
+  %fieldset
+    %fieldset
+      %label{:for => "login"} Login
+      = text_field_tag 'login', @login
+    %fieldset
+      %label{:for => "password"} Password
+      = password_field_tag 'password'
+    %fieldset.reverse
+      = check_box_tag 'remember_me', @remember_me
+      %label{:for => "remember_me"} Remember me
+
+  %fieldset.buttons
+    = submit_tag 'Log In'
+
+    %p<>
+      Not registered?
+      %a{:href => signup_path} Sign up now.

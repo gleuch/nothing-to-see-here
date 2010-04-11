@@ -1,0 +1,13 @@
+= error_messages_for :client
+
+- form_for @client, :url => portfolio_clients_path do |f|
+  %fieldset
+    %fieldset
+      %label{:for => "name"} Name
+      = f.text_field :name
+    %fieldset
+      %label{:for => "site"} Website
+      = f.text_field :site
+
+  %fieldset.buttons
+    = submit_tag 'Create Client'

@@ -1,0 +1,13 @@
+%h1 Create a Portfolio
+- form_for @portfolio, :url => portfolios_path do |f|
+  %fieldset
+    %h2 Portfolio Information
+    %fieldset
+      %label{:for => "title"} Name
+      = f.text_field :title
+    %fieldset
+      %label{:for => "description"} Description
+      = f.text_area :description
+
+  %fieldset.buttons
+    = submit_tag 'Create Portfolio'

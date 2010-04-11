@@ -1,0 +1,15 @@
+- unless @portfolio.blank?
+  %h2= @portfolio.title
+
+  %h4 Clients
+  - unless @portfolio.clients.blank?
+    - @portfolio.clients.each do |client|
+      %li
+        %a{:href => portfolio_client_path(@portfolio.slug, client.slug)}= client.name
+  - else
+    %p
+      You have no clients.
+      %a{:href => new_portfolio_client_path(@portfolio.slug)} Go create one!
+
+- else
+  %p.suggest Sorry, you are not part of any portfolios.

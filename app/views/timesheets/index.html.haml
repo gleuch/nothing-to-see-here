@@ -1,0 +1,20 @@
+= smart_breadcrumbs(:suffix => 'Timesheets')
+
+%h5 Total hours: #{timesheet_time_format(@timesheets_total_time, :fancy => true)} (#{timesheet_time_format(@timesheets_total_time)})
+
+- unless @timesheets.blank?
+
+  = will_pagiante
+
+  - @timesheets.each do |timesheet|
+    - #
+
+  = will_paginate
+
+
+- else
+  %p.suggest There are no timesheets for this #{which_section?}#{!params[:user_id].blank? && @object.class != User ? ' for this user' : ''}#{!params[:date_start].blank? || !params[:date_end].blank? ? ' within this date range' : ''}.
+
+
+- @content_for_sidebar = capture_haml do
+  %a{:href => get_new_timesheet_path} Add a timesheet

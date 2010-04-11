@@ -1,0 +1,10 @@
+- unless @portfolios.blank?
+  %h1 Portfolios
+
+  - @portfolios.each do |portfolio|
+    %h2= portfolio.title
+    %p
+      %a{:href => portfolio_path(portfolio.slug)} View Portfolio
+
+- else
+  %p.suggest Sorry, you are not part of any portfolios.
