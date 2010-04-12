@@ -12,11 +12,15 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
 
-
-
+  before_filter   :app_setup
 
 
 protected
+
+  def app_setup
+    User.current_user = current_user if logged_in?
+  end
+
 
   def prod?; ENV['RAILS_ENV'] == 'production'; end
   def dev?; ENV['RAILS_ENV'] == 'development'; end
@@ -38,6 +42,34 @@ protected
     @per_page = per_page
   end
 
+
+  def section_path(object)
+    if object.class == Project
+      link = portfolio_client_project_path(object.client.portfolio.slug, object.client.slug, object)
+    elsif object.class == Client
+      link = portfolio_client_path(object.portfolio.slug, object.slug)
+    elsif object.class == Portfolio
+      link = portfolio_path(object.slug)
+    end
+    link || nil
+  end
+  helper_method :section_path
+
+
+  def timesheet_time_float(time)
+    # Allow conversion of time (as ##:##) to float
+    if time =~ /^\d+\:\d+$/ || time =~ /^\:\d+$/ || time =~ /^\d+\:$/
+      hours = (time.match(/^(\d+)/)[1]).to_i rescue 0
+      hours ||= 0
+      mins = (time.match(/(\d+)$/)[1]).to_i rescue 0
+      mins ||= 0
+      float = (hours + (mins/60.to_f)).to_f
+    # time is float
+    elsif time =~ /^\d+$/ || time =~ /^\d+\.\d+$/ || time =~ /^\.\d+$/ || time =~ /^\d+\.$/
+      float = time.to_f
+    end
+    return float || nil # return nil if not given proper formatting
+  end
 
   def timesheet_time_format(time, *opts)
     options, str = {:fancy => false}.merge(opts.extract_options!), []
@@ -63,5 +95,10 @@ protected
     return str
   end
   helper_method :timesheet_time_format
+
+  def remember_redirect
+    session[:return_to] = params[:redirect] unless params[:redirect].blank?
+    session[:return_to] ||= request.env['HTTP_REFERER'] if !request.env['HTTP_REFERER'].blank? && request.env['HTTP_REFERER'] != request.path
+  end
 
 end

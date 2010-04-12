@@ -1,0 +1,11 @@
+- return if flash.blank?
+
+#flashes
+  - flash.each do |flag, msg|
+    .flash{:class => "flash_#{flag}"}
+      = msg
+      %a.close{:href => 'javascript:;', :onclick => "$(this).parent().animate({height:0}, 250, function() {$(this).remove();}); return false;"} x
+
+
+- flash.discard
+- session.delete(:flash)

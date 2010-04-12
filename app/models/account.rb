@@ -5,8 +5,8 @@ class Account < ActiveRecord::Base
 
   has_and_belongs_to_many   :users
 
-  has_many  :portfolios
-  has_one   :owner, :class_name => 'User'
+  has_many    :portfolios
+  belongs_to  :owner, :class_name => 'User'
 
 
   validates_presence_of     :company
@@ -18,17 +18,20 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,     :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  validates_presence_of     :owner_id
+  # validates_presence_of     :owner_id
 
   attr_accessible :company, :email
 
 
   before_create :generate_slug
   # before_save :ensure_user_account
-  # after_save  :create_portfolio
+  after_create  :create_portfolio
 
 
   def slug; self.slug || self.id; end
+
+  def add_user(user); self.users << user; end
+  def remove_user(user); self.users.delete(user); end
 
 
 protected
@@ -42,10 +45,12 @@ protected
   # end
 
 
-  # def create_portfolio
-  #   portfolio = Portfolio.create(:account_id => self.id, :title => "#{self.company} Portfolio", :description => 'This would describe your portfolio.')
-  #   portfolio.users << self.owner
-  # end
+  def create_portfolio
+    if self.option_portfolios_count == 1
+      portfolio = Portfolio.create(:account_id => self.id, :title => self.company, :description => '')
+      portfolio.add_user(self.owner)
+    end
+  end
 
   def generate_slug
     invalid, i, base_slug = true, 0, self.company.downcase.gsub(/[\~\!\@\#\$\%\^\&\*\(\)\_\+\=\`\{\}\|\:\"\<\>\?\,\.\/\;\'\[\]\\\'\"\`]/, '').gsub(/\s/, '-')

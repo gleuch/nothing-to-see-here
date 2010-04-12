@@ -9,12 +9,16 @@ class ClientsController < ApplicationController
     @clients = @portfolio.clients rescue nil
     
     # Skip this page if user is only part of one portfolio.
-    redirect_to( portfolio_client_path(@portfolio.slug, @clients.first.slug) ) and return if @clients.length == 1
+    redirect_to( portfolio_client_path(@portfolio.slug, @clients.first.slug) ) and return unless @clients.blank? || @clients.count != 1
   end
 
   def show
     @client = @portfolio.clients.find_by_url_slug(params[:id]) rescue nil
     @client ||= @portfolio.clients.find(params[:id]) rescue nil
+
+    unless @client.blank?
+      @notifications = @client.notifications.paginate(:per_page => @per_page, :page => @page)
+    end
   end
 
   def new
@@ -24,7 +28,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new( params[:client].merge({ :portfolio_id => @portfolio.id }) )
     if @client.save
-      @client.users << current_user
+      @client.add_user(current_user)
 
       flash[:notice] = "Your client was successfully created."
       redirect_to portfolio_client_path(@portfolio.slug, @client.slug)
@@ -44,7 +48,7 @@ protected
   end
 
   def check_user_permissions
-    raise NotAllowed, "You do not have permission to make this request." if current_user.owned_account.blank?
+    raise NotAllowed, "You do not have permission to make this request." if current_user.owner?(@portfolio)
   end
 
   def check_account_limits

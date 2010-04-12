@@ -4,10 +4,17 @@
 
   %body
     #container
-      #header
+      - if logged_in?
+        = render :partial => 'layouts/chunks/page_mast'
+      = render :partial => 'layouts/chunks/page_header'
+
+      #navigation_tabs
+        = yield :tabs
 
       #content.c
         #content_area.left
+          = render :partial => 'layouts/chunks/flashes'
+
           = yield
         #content_sidebar.right
           = yield :sidebar

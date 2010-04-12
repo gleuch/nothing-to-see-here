@@ -5,11 +5,19 @@
   - unless @portfolio.clients.blank?
     - @portfolio.clients.each do |client|
       %li
-        %a{:href => portfolio_client_path(@portfolio.slug, client.slug)}= client.name
+        %a{:href => portfolio_client_path(@portfolio.slug, client.slug)}= client.title
   - else
     %p
       You have no clients.
       %a{:href => new_portfolio_client_path(@portfolio.slug)} Go create one!
+
+  #notifications
+    = render :partial => 'notifications/list', :object => @notifications, :locals => {:parent => @portfolio}
+
+
+  - @content_for_tabs = capture_haml do
+    = render :partial => 'layouts/tabs/portfolio', :object => @portfolio, :locals => {:tab => 'overview'}
+
 
 - else
   %p.suggest Sorry, you are not part of any portfolios.

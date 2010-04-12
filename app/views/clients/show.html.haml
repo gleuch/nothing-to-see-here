@@ -1,1 +1,27 @@
-[show page for client]
+= smart_breadcrumbs
+
+
+- unless @client.blank?
+  %h2= @client.title
+
+  - unless @client.projects.blank?
+    [Projects]
+  - else
+    %p
+      You have no projects.
+      %a{:href => new_portfolio_client_project_path(@portfolio.slug, @client.slug)} Go create one!
+
+  #notifications
+    = render :partial => 'notifications/list', :object => @notifications, :locals => {:parent => @client}
+
+
+  - @content_for_tabs = capture_haml do
+    = render :partial => 'layouts/tabs/client', :object => @client, :locals => {:tab => 'overview'}
+
+  - @content_for_sidebar = capture_haml do
+    %dl
+      %dd
+        %a{:href => new_portfolio_client_project_path(@portfolio.slug, @client.slug)} Create a Project
+
+- else
+  %p.suggest Sorry, you are not part of any clients.

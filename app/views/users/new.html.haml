@@ -14,7 +14,7 @@
       = f.text_field :email
 
   %fieldset
-    %h3 User Information
+    %h3 Login Information
     %fieldset
       %label{:for => "login"} Login
       = f.text_field :login
@@ -30,5 +30,18 @@
       %label{:for => "password_confirmation"} Confirm Password
       = f.password_field :password_confirmation
 
+
+  %fieldset
+    %h3 Personal Information
     %fieldset
-      = submit_tag 'Sign Up'
+      %label{:for => "first_name"} First Name
+      = f.text_field :first_name
+    %fieldset
+      %label{:for => "last_name"} Last Name
+      = f.text_field :last_name
+    %fieldset
+      %label{:for => "gender"} Gender
+      = f.select :gender, [['Male', 'm'], ['Female', 'f']], :include_blank => 'Choose...'
+
+  %fieldset
+    = submit_tag 'Sign Up'

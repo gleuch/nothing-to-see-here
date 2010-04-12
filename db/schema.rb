@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
   create_table "clients", :force => true do |t|
     t.integer  "portfolio_id"
     t.string   "url_slug"
-    t.string   "name"
+    t.string   "title"
     t.string   "site"
     t.integer  "option_projects_count", :default => 25
     t.string   "status",                :default => "active"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
     t.integer  "client_id"
     t.integer  "user_id"
     t.integer  "item_id"
-    t.string   "item_kind"
+    t.string   "item_type"
     t.text     "comment"
     t.string   "status",       :default => "active"
     t.boolean  "active",       :default => true
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
     t.integer  "portfolio_id"
     t.integer  "client_id"
     t.integer  "item_id"
-    t.string   "item_kind"
+    t.string   "item_type"
     t.text     "message"
     t.integer  "category_id"
     t.integer  "creator_id"
@@ -82,6 +82,23 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
   create_table "messsage_notifications_users", :id => false, :force => true do |t|
     t.integer  "user_id"
     t.integer  "message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "portfolio_id"
+    t.integer  "client_id"
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.integer  "subject_id"
+    t.string   "subject_type"
+    t.string   "note_type"
+    t.string   "message"
+    t.string   "status",       :default => "active"
+    t.boolean  "active",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -108,11 +125,18 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
   create_table "projects", :force => true do |t|
     t.integer  "portfolio_id"
     t.integer  "client_id"
-    t.string   "name"
+    t.string   "title"
     t.text     "description"
     t.string   "cached_tags"
     t.string   "status",       :default => "active"
     t.boolean  "active",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects_users", :id => false, :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -135,9 +159,10 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
   create_table "timesheets", :force => true do |t|
     t.integer  "portfolio_id"
     t.integer  "client_id"
+    t.integer  "project_id"
     t.integer  "user_id"
     t.integer  "item_id"
-    t.string   "item_kind"
+    t.string   "item_type"
     t.string   "message"
     t.float    "time_spent"
     t.date     "worked_at"
@@ -160,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
     t.integer  "assigned_id"
     t.integer  "creator_id"
     t.integer  "item_id"
-    t.string   "item_kind"
+    t.string   "item_type"
     t.string   "title"
     t.text     "description"
     t.string   "due_at"
@@ -188,8 +213,6 @@ ActiveRecord::Schema.define(:version => 20100402015249) do
     t.string   "photo_content_type"
     t.string   "twitter_username"
     t.string   "cached_roles"
-    t.string   "cached_badges"
-    t.string   "cached_notifications"
     t.string   "status",                                  :default => "active"
     t.datetime "photo_updated_at"
     t.datetime "activated_at"

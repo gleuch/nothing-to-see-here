@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
     @account.owner = current_user if logged_in?
 
     if @account.save
-      @account.users << @account.owner
+      @account.add_user(@account.owner)
 
       flash[:notice] = "Your account was successfully saved."
       redirect_to("/") and return

@@ -1,0 +1,15 @@
+%h1 Create a Project
+
+= error_messages_for :project
+
+- form_for @project, :url => portfolio_client_projects_path do |f|
+  %fieldset
+    %fieldset
+      %label{:for => "title"} Name
+      = f.text_field :title
+    %fieldset
+      %label{:for => "description"} Description
+      = f.text_area :description
+
+  %fieldset.buttons
+    = submit_tag 'Create Project'

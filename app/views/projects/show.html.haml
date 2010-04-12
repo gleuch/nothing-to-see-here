@@ -1,0 +1,17 @@
+= smart_breadcrumbs
+
+- unless @project.blank?
+  %h2= @project.title
+
+  #notifications
+    = render :partial => 'notifications/list', :object => @notifications, :locals => {:parent => @project}
+
+
+  - @content_for_tabs = capture_haml do
+    = render :partial => 'layouts/tabs/project', :object => @project, :locals => {:tab => 'overview'}
+
+  - @content_for_sidebar = capture_haml do
+    &nbsp;
+
+- else
+  %p.suggest Sorry, you are not part of any projects.

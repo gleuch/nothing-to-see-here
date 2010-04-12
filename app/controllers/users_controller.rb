@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  
 
   def new
     @user = User.new
@@ -19,14 +18,21 @@ class UsersController < ApplicationController
       # reset session
 
       @account.owner_id = @user.id # Set as owner
-      
+      User.current_user = self.current_user = @user # Make user logged-in
+
       if @account.save
-        @account.users << @user # Add them to the account.
-        self.current_user = @user # Make user logged-in
+        @account.add_user(@user) # Add them to the account.
 
         flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
-        redirect_to new_portfolio_path
+        if @account.portfolios.blank?
+          path = new_portfolio_path
+        else
+          path = portfolio_path(@account.portfolios.first.slug) rescue new_portfolio_path
+        end
+
+        redirect_to path and return
       else
+        self.current_user.discard
         @user.destroy # User should not exist w/o an account... lame, I know!
 
         flash[:error] = "There was a problem creating your account. Please try again."

@@ -1,0 +1,20 @@
+- unless list.blank?
+  - list.each do |notification|
+    - html = capture_haml do
+      - begin
+        .notification{:class => "notification_#{notification.note_type} notification_item_#{notification.item_type.downcase}", :id => "notification_#{notification.id}"}
+          = render :partial => "notifications/types/#{notification.note_type}", :object => notification
+      - rescue
+        - if dev?
+          %p<>
+            %strong There was an error rendering note type #{notification.note_type}:
+            = $!
+
+    - # Render string unless blank?
+    = html unless html.blank?
+
+
+
+
+- else
+  %p.suggest There are no notifications for this #{which_section? local_assigns[:parent]}.

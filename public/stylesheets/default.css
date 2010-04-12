@@ -1,6 +1,108 @@
-body {}
-
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; background: transparent; letter-spacing: inherit; line-height: inherit; z-index: 0;}
+html, div, ul, ol, li, dl, dd, dt {min-height: 0;}
+body {font-family: Helvetica, Arial, Verdana, "Lucida Grande", sans-serif; color: #000000; background-color: #ffffff; margin: 0; padding: 0; font-size: 62.5%; min-width: 900px; letter-spacing: -.02em;}
 
 .c:after {content: "."; clear: both; display: block; height: 0; visibility: hidden;}
 .left {clear: none; float: left;}
 .right {clear: none; float: right;}
+
+
+/* Global Styles
+   ------------------------------------ */
+
+/* Element styles */
+h1, h2, h3, h4, h5, h6, p, ul li, dl dt, dl dd {padding: 0 0 8px 0; margin: 0; line-height: 1.25em; color: #444; letter-spacing: -.02em;}
+h1, h2, h3, h4, h5, h6 {font-family: Helvetica, Arial, Verdana, "Lucida Grande", sans-serif; font-weight: bold;}
+h1 {font-size: 2.4em;}
+h2 {font-size: 2.2em;}
+h3 {font-size: 2.0em;}
+h4 {font-size: 1.8em;}
+h5 {font-size: 1.6em;}
+h6 {font-size: 1.4em;}
+dl dt {font-size: 1.4em;}
+p, dl dd, ul li, ol li, pre {font-size: 1.3em;}
+pre, code {font-family: monospace;}
+input[type="text"], textarea {font-family: Helvetica, Arial, Verdana, "Lucida Grande", sans-serif;}
+input[type="text"], textarea {border: 1px solid #cccccc; color: #333333; margin: 0; padding: 4px 3px 3px 3px; line-height: 1.0em;}
+input[type="password"] {border: 1px solid #cccccc; color: #333333; margin: 0; padding: 2px 3px; line-height: 1.0em;}
+textarea {line-height: 1.125em; padding-bottom: 2px;}
+strong, b, dl dt, th {font-weight: bold;}
+table td, table th {font-size: 1.3em;}
+table td p, table th p {font-size: 1.0em;}
+.c:after {content: "."; clear: both; display: block; visibility: hidden; height: 0;}
+a {color: #000000; text-decoration: underline;}
+/*a:visited {color: #333333; text-decoration: none; border-bottom: 1px dotted #333333;}*/
+a:hover {color: #333333; text-decoration: underline;}
+a, span, strong, b, em, i {letter-spacing: inherit;}
+i, em {font-style: italic;}
+p small {font-size: .846em;}
+
+.left {clear: none; float: left;}
+.right {clear: none; float: right;}
+.rel {position: relative;}
+.abs {position: absolute;}
+.hide {display: none;}
+.block {clear: both; display: block;}
+.clear {clear: both; }
+.bold {font-weight: bold;}
+.nobold {font-weight: normal;}
+.favicon {padding-left: 20px; background: url(../favicon.png) 0 0 no-repeat;}
+.pointer {cursor: pointer;}
+.on .on, .off .off {display: inline;}
+.on .off, .off .on {display: none;}
+.ta_l {text-align: left;}
+.ta_c {text-align: center;}
+.ta_r {text-align: right;}
+.bold {font-weight: bold;}
+.italic {font-style: italic;}
+.loading_simple, .loading {min-height: 50px; background: url(../images/loading.gif) center center no-repeat;}
+.loading, .fbloading {min-height: 150px;}
+.loading.inline {background: url(../images/loading.gif) top left no-repeat; display: inline-block; min-height: 0; height: 16px; width: 16px; margin: 0 4px;}
+.loading.inline.hide {display: none;}
+
+
+.suggest {text-align: center; color: #444444;}
+p.suggest {padding: 30px 20px 40px 20px;}
+
+
+.pagination {background: #fff; text-align: center; padding: 12px 0; margin: 12px 0 0 0; border-top: 1px solid #e0e0e0;}
+.pagination a, .pagination span {padding: .2em .5em; font-size: 1.1em; display: inline-block; margin-right: 1px; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
+.pagination span.disabled {color: #999; border: 1px solid #e0e0e0;}
+.pagination span.current {font-weight: bold; background: #444; color: #fff; border: 1px solid #444;}
+.pagination a {text-decoration: none; color: #444; border: 1px solid #aaa;}
+.pagination a:hover, .pagination a:focus {color: #444; border-color: #888; background: #eee;}
+.pagination:after {content: "."; clear: both; display: block; height: 0; visibility: hidden;}
+* html .pagination {height: 1%;}
+*:first-child+html .pagination {overflow: hidden;}
+
+form {font-size: 1.0em;}
+fieldset {font-size: 1.0em; padding: 16px 0 0 0; margin: 16px 0 0 0; border-top: 1px solid #e0e0e0;}
+form>fieldset:first-child, fieldset.first {margin: 0; border: none;}
+fieldset h2 {color: #444; letter-spacing: -.02em; font-size: 2.0em;}
+fieldset p {color: #444; letter-spacing: -.02em;}
+fieldset.buttons {margin: 12px 0 0 0; padding: 12px 4px; border-top: 1px solid #e0e0e0; text-align: right;}
+fieldset.buttons input[type=submit], fieldset.buttons input[type=button], fieldset.buttons button, fieldset.buttons input[type=reset] {font-size: 1.5em; font-weight: bold; padding: 6px 10px; margin: 0 0 0 4px;}
+fieldset.buttons .loading.inline {margin: 4px 4px 0 4px;}
+fieldset fieldset {position: relative; margin: 6px 0 6px 120px; padding: 0; border: none;}
+fieldset fieldset label {position: absolute; cursor: pointer; top: 0; left: -120px; width: 110px; text-align: right; font-size: 1.3em; line-height: 1.0em; font-weight: bold; padding: 7px 0 0 0; color: #444;}
+/*fieldset fieldset input[type=checkbox], fieldset fieldset input[type=radio] {cursor: pointer;}*/
+fieldset fieldset p {font-size: 1.3em; line-height: 1.125em; padding: 0 0 5px 0; color: #444;}
+fieldset fieldset .fieldWithErrors {padding: 0; margin: 0; clear: none; display: inline; font-size: 1.0em;}
+fieldset fieldset p.note {font-size: 1.1em; color: #666;}
+fieldset fieldset p input[type=text], fieldset fieldset p textarea, fieldset fieldset .fieldWithErrors input[type=text], fieldset fieldset .fieldWithErrors textarea {width: 200px; padding: 4px 4px 3px 4px; font-size: 1.0em; line-height: 1.0em;}
+fieldset fieldset p.fake {padding: 6px 0 4px 0; font-size: 1.4em;}
+fieldset fieldset p input[type=password] {width: 200px; padding: 2px 4px 2px 4px; font-size: 1.0em; line-height: 1.0em;}
+fieldset fieldset p textarea, fieldset fieldset .fieldWithErrors textarea {line-height: 1.125em; padding: 4px; vertical-align: top;}
+fieldset fieldset.inverse {}
+fieldset fieldset.inverse label {position: relative; top: 2px; left: 0; width: auto; font-weight: normal;}
+fieldset fieldset.inverse input[type=checkbox] {position: absolute; top: 0; left: -28px; padding: 0; margin: 0;}
+fieldset fieldset.flat {padding: 0; margin: 6px 0;}
+fieldset fieldset.flat label {position: relative; display: block; text-align: left; top: 0; left: 0; padding: 0 0 4px 0; margin: 0; width: auto;}
+
+table {}
+table thead {}
+table thead tr {}
+table thead tr th {text-align: left;}
+table tbody {}
+table tbody tr {}
+table tbody tr td {}

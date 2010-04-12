@@ -1,0 +1,9 @@
+%dl
+  %dd{:class => (local_assigns[:tab] == 'overview')}
+    %a{:href => portfolio_path(portfolio.slug)} Overview
+  %dd{:class => (local_assigns[:tab] == 'todos')}
+    %a{:href => portfolio_todos_path(portfolio.slug)} Todos
+  %dd{:class => (local_assigns[:tab] == 'todos')}
+    %a{:href => portfolio_messages_path(portfolio.slug)} Messages
+  %dd{:class => (local_assigns[:tab] == 'timesheets')}
+    %a{:href => portfolio_timesheets_path(portfolio.slug)} Timesheets

@@ -8,7 +8,7 @@
       %ul
         - portfolio.clients.each do |client|
           %li
-            %a{:href => portfolio_client_path(portfolio.slug, client.slug)}= client.name
+            %a{:href => portfolio_client_path(portfolio.slug, client.slug)}= client.title
 
 - elsif !current_user.clients.blank?
   [ show clients ]

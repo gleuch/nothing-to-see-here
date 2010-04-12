@@ -1,0 +1,7 @@
+/* TEMP */
+#header, #content, #mast, #navigation_tabs {border-bottom: 1px solid #ccc; margin: 0 0 8px 0; padding: 0 0 8px 0;}
+#content_area {width: 100%; border-right: 1px solid #ccc; padding: 0 8px 0 0; margin: 0 8px 0 0;}
+#content_sidebar {width: 200px;}
+
+
+#notifications {padding: 20px;}

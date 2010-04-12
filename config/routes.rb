@@ -6,27 +6,38 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
 
+  # /users
+  map.with_options :controller => 'users' do |users|
+    users.user_settings  '/users/settings', :action => 'settings'
+  end
   map.resources :users
+
+  # /session
   map.resource  :session
 
   # /account
+  map.with_options :controller => 'accounts' do |account|
+    account.account_settings  '/account/settings', :action => 'settings'
+  end
   map.resource  :account
 
   # /portfolios
   map.resources :portfolios do |portfolio|
     # /portfolios/:portfolio_id/timesheets
     portfolio.resources :timesheets
-
     # /portfolios/:portfolio_id/todos
     portfolio.resources :todos
+    # /portfolios/:portfolio_id/messages
+    portfolio.resources :messages
 
     # /portfolios/:portfolio_id/clients
     portfolio.resources :clients do |client|
       # /portfolios/:portfolio_id/clients/:client_id/timesheets
       client.resources :timesheets
-
       # /portfolios/:portfolio_id/clients/:client_id/todos
       client.resources :todos
+      # /portfolios/:portfolio_id/clients/:client_id/messages
+      client.resources :messages
 
       # /portfolios/:portfolio_id/clients/:client_id/projects
       client.resources :projects do |project|

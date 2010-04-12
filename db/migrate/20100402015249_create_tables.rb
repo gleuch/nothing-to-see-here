@@ -27,7 +27,7 @@ class CreateTables < ActiveRecord::Migration
     create_table :clients do |t|
       t.integer     :portfolio_id
       t.string      :url_slug
-      t.string      :name
+      t.string      :title
       t.string      :site
       t.integer     :option_projects_count,   :default => 25
       t.string      :status,                  :default => 'active'
@@ -49,7 +49,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer     :client_id
       t.integer     :user_id
       t.integer     :item_id
-      t.string      :item_kind
+      t.string      :item_type
       t.text        :comment
       t.string      :status,          :default => 'active'
       t.boolean     :active,          :default => true
@@ -61,7 +61,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer     :portfolio_id
       t.integer     :client_id
       t.integer     :item_id
-      t.string      :item_kind
+      t.string      :item_type
       t.text        :message
       t.integer     :category_id
       t.integer     :creator_id
@@ -76,6 +76,23 @@ class CreateTables < ActiveRecord::Migration
       t.integer     :message_id
       t.timestamps
     end
+
+    create_table  :notifications do |t|
+      t.integer     :portfolio_id
+      t.integer     :client_id
+      t.integer     :project_id
+      t.integer     :user_id
+      t.integer     :item_id
+      t.string      :item_type
+      t.integer     :subject_id
+      t.string      :subject_type
+      t.string      :note_type
+      t.string      :message
+      t.string      :status,          :default => 'active'
+      t.boolean     :active,          :default => true
+      t.timestamps
+    end
+
 
     # Portfolio table
     create_table :portfolios do |t|
@@ -101,11 +118,18 @@ class CreateTables < ActiveRecord::Migration
       t.integer     :portfolio_id
       t.integer     :client_id
       # t.string      :url_slug
-      t.string      :name
+      t.string      :title
       t.text        :description
       t.string      :cached_tags
       t.string      :status,            :default => 'active'
       t.boolean     :active,            :default => true
+      t.timestamps
+    end
+
+    # User<-->Project association table
+    create_table :projects_users, :id => false do |t|
+      t.integer     :user_id
+      t.integer     :project_id
       t.timestamps
     end
 
@@ -128,9 +152,10 @@ class CreateTables < ActiveRecord::Migration
     create_table :timesheets do |t|
       t.integer     :portfolio_id
       t.integer     :client_id
+      t.integer     :project_id
       t.integer     :user_id
       t.integer     :item_id
-      t.string      :item_kind
+      t.string      :item_type
       t.string      :message
       t.float       :time_spent
       t.date        :worked_at
@@ -146,7 +171,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer     :assigned_id
       t.integer     :creator_id
       t.integer     :item_id
-      t.string      :item_kind
+      t.string      :item_type
       t.string      :title
       t.text        :description
       t.string      :due_at
@@ -181,8 +206,6 @@ class CreateTables < ActiveRecord::Migration
       t.string      :photo_content_type
       t.string      :twitter_username
       t.string      :cached_roles
-      t.string      :cached_badges
-      t.string      :cached_notifications
       t.string      :status,                      :default => 'active'
       t.datetime    :photo_updated_at
       t.datetime    :activated_at
@@ -208,9 +231,11 @@ class CreateTables < ActiveRecord::Migration
     drop_table :comments
     drop_table :messages
     drop_table :messsage_notifications_users
+    drop_table :notifications
     drop_table :portfolios
     drop_table :portfolios_users
     drop_table :projects
+    drop_table :projects_users
     drop_table :roles
     drop_table :roles_users
     drop_table :timesheets

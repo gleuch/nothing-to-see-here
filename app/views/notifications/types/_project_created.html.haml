@@ -1,0 +1,5 @@
+- item = project_created.item rescue nil
+
+- raise "Item not found" if item.blank?
+
+%p The #{which_section? item} #{linkify_section item} was created.

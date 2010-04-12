@@ -10,6 +10,7 @@ class Portfolio < ActiveRecord::Base
   has_many  :todos
   has_many  :timesheets
   has_many  :comments
+  has_many  :notifications, :order => 'created_at DESC, id DESC', :conditions => "note_type IN(#{Notification::NOTE_TYPES.map{|n| "'#{n}'"}.join(', ')})"
 
 
   validates_presence_of     :title
@@ -18,8 +19,28 @@ class Portfolio < ActiveRecord::Base
 
   before_create :generate_slug
 
+  after_create  { |portfolio| portfolio.create_notification(:note_type => 'portfolio_created') }
+  after_update  { |portfolio| portfolio.create_notification(:note_type => 'portfolio_updated') }
+  after_destroy { |portfolio| portfolio.create_notification(:note_type => 'portfolio_deleted') }
+
 
   def slug; self.url_slug || self.id; end
+
+  def add_user(user)
+    self.users << user
+    create_notification(:note_type => 'user_added', :subject_type => user.class.to_s, :subject_id => user.id)
+  end
+
+  def remove_user(user)
+    self.users.delete(user)
+    create_notification(:note_type => 'user_removed', :subject_type => user.class.to_s, :subject_id => user.id)
+  end
+
+  def create_notification(*opts)
+    options = {:portfolio_id => self.id, :item_type => self.class.to_s, :item_id => self.id}.merge( opts.extract_options! )
+    options[:user_id] = User.current_user.id
+    Notification.create(options)
+  end
 
 
 protected

@@ -1,10 +1,12 @@
+%h1 Create a Client
+
 = error_messages_for :client
 
 - form_for @client, :url => portfolio_clients_path do |f|
   %fieldset
     %fieldset
-      %label{:for => "name"} Name
-      = f.text_field :name
+      %label{:for => "title"} Name
+      = f.text_field :title
     %fieldset
       %label{:for => "site"} Website
       = f.text_field :site

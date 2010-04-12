@@ -1,0 +1,15 @@
+#mast.c
+  .left
+  
+  .right
+    %dl
+      %dt
+        = current_user.name
+      %dd
+        %a{:href => user_settings_path} User Settings
+      - unless current_user.owned_account.blank?
+        %dd
+          %a{:href => account_settings_path} Account Settings
+      %dd
+        %a{:href => logout_path} Logout
+        

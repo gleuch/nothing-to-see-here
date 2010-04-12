@@ -1,0 +1,7 @@
+- user = user_added.subject rescue nil
+- item = user_added.item rescue nil
+
+- raise "User not found" if user.blank?
+- raise "Item not found" if item.blank?
+
+%p #{user.name} was invited to the #{which_section? item} #{linkify_section item}.
